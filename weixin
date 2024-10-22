@@ -1,0 +1,23 @@
+<?php
+// 设置支付链接
+$wechatPayUrl = 'https://your-wechat-pay-url.com'; // 微信支付跳转链接
+$alipayPayUrl = 'https://your-alipay-pay-url.com';  // 支付宝支付跳转链接
+
+// 获取用户的 User-Agent
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+// 检查 User-Agent 判断是微信还是支付宝
+if (strpos($userAgent, 'MicroMessenger') !== false) {
+    // 微信浏览器
+    header('Location: ' . $wechatPayUrl);
+    exit;
+} elseif (strpos($userAgent, 'AlipayClient') !== false) {
+    // 支付宝浏览器
+    header('Location: ' . $alipayPayUrl);
+    exit;
+} else {
+    // 其他浏览器，提示不支持
+    echo '请使用微信或支付宝扫码支付';
+    exit;
+}
+?>
